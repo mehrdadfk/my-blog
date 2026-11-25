@@ -1,0 +1,39 @@
+# Site settings — see https://jekyllrb.com/docs/configuration/ for details.
+
+title: "Mehrdad's Blog"
+tagline: "Notes on things I'm building and learning"
+description: >-
+  Mehrdad's blog about engineering, machine learning, and whatever else
+  seems worth writing down.
+author: "Mehrdad Fakhimikamran"
+
+# Set this once you've registered a domain (see the SETUP.md guide).
+# Leave empty while developing locally / before you have a domain.
+url: ""
+baseurl: ""
+
+# Theme — "minima" is GitHub Pages' default supported theme: clean, fast,
+# no build config needed, and themeable via _sass overrides later.
+theme: minima
+minima:
+  skin: classic
+  social_links:
+    github: your-github-username
+
+# Plugins GitHub Pages supports natively (no custom CI build needed).
+plugins:
+  - jekyll-feed      # generates /feed.xml (Atom)
+  - jekyll-sitemap   # generates /sitemap.xml
+  - jekyll-seo-tag   # adds SEO/meta tags to <head>
+
+# Build settings
+markdown: kramdown
+permalink: /:year/:month/:day/:title.html
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - SETUP.md
+  - README.md
+  - vendor
+  - node_modules
