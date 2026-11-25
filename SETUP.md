@@ -5,13 +5,20 @@ Pages, and (optionally) putting it on your own domain.
 
 ## 1. Run it locally
 
-You have Ruby installed already. Install the gems and start the dev server:
+The Chirpy theme gem requires Ruby ~> 3.1. If `ruby -v` on your machine
+is newer than that (this machine's default was 4.0.6), use the scoped
+`ruby@3.3` Homebrew install instead of your system Ruby — it doesn't
+touch your default Ruby, it's just prefixed onto `PATH` for these
+commands:
 
 ```bash
 cd /Users/m89251/projects/my-blog
-bundle install
-bundle exec jekyll serve
+PATH="/opt/homebrew/opt/ruby@3.3/bin:$PATH" bundle install
+PATH="/opt/homebrew/opt/ruby@3.3/bin:$PATH" bundle exec jekyll serve
 ```
+
+(If your system Ruby is already 3.1–3.x, drop the `PATH=...` prefix and
+just run `bundle install` / `bundle exec jekyll serve` directly.)
 
 Open http://localhost:4000 — it live-rebuilds when you save a file.
 

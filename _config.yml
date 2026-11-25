@@ -1,39 +1,182 @@
-# Site settings — see https://jekyllrb.com/docs/configuration/ for details.
+# The Site Configuration — based on the jekyll-theme-chirpy starter config
+# (https://github.com/cotes2020/chirpy-starter), trimmed of options we're
+# not using, with comments kept where they explain a non-obvious choice.
 
+theme: jekyll-theme-chirpy
+
+lang: en
+
+# Leave empty for now; set once you've registered a domain (see SETUP.md).
+# E.g. 'https://username.github.io', no trailing slash.
+url: ""
+baseurl: ""
+
+timezone:
+
+# jekyll-seo-tag settings
 title: "Mehrdad's Blog"
 tagline: "Notes on things I'm building and learning"
 description: >-
   Mehrdad's blog about engineering, machine learning, and whatever else
   seems worth writing down.
-author: "Mehrdad Fakhimikamran"
 
-# Set this once you've registered a domain (see the SETUP.md guide).
-# Leave empty while developing locally / before you have a domain.
-url: ""
-baseurl: ""
+github:
+  username: mehrdadfk
 
-# Theme — "minima" is GitHub Pages' default supported theme: clean, fast,
-# no build config needed, and themeable via _sass overrides later.
-theme: minima
-minima:
-  skin: classic
-  social_links:
-    github: your-github-username
+twitter:
+  username:
 
-# Plugins GitHub Pages supports natively (no custom CI build needed).
-plugins:
-  - jekyll-feed      # generates /feed.xml (Atom)
-  - jekyll-sitemap   # generates /sitemap.xml
-  - jekyll-seo-tag   # adds SEO/meta tags to <head>
+social:
+  name: "Mehrdad Fakhimikamran"
+  email:
+  fediverse_handle:
+  links:
+    - https://github.com/mehrdadfk
 
-# Build settings
-markdown: kramdown
-permalink: /:year/:month/:day/:title.html
+webmaster_verifications:
+  google:
+  bing:
+  alexa:
+  yandex:
+  baidu:
+  facebook:
+
+analytics:
+  google:
+    id:
+  goatcounter:
+    id:
+  umami:
+    id:
+    domain:
+  matomo:
+    id:
+    domain:
+  cloudflare:
+    id:
+  fathom:
+    id:
+
+pageviews:
+  provider:
+
+# Keep empty to follow system light/dark preference, with a manual toggle.
+theme_mode:
+
+cdn:
+avatar:
+social_preview_image:
+
+toc: true
+
+actions:
+  edit_post:
+    enabled: false
+    url: ""
+    static_url: false
+
+# No comment provider wired up yet — pick one (disqus/utterances/giscus)
+# later if you want comments.
+comments:
+  provider:
+  disqus:
+    shortname:
+  utterances:
+    repo:
+    issue_term:
+  giscus:
+    repo:
+    repo_id:
+    category:
+    category_id:
+    mapping:
+    strict:
+    input_position:
+    lang:
+    reactions_enabled:
+
+assets:
+  self_host:
+    enabled:
+    env:
+
+pwa:
+  enabled: true
+  cache:
+    enabled: true
+    deny_paths:
+
+paginate: 10
+
+# ------------ The following options are not recommended to be modified ------------------
+
+kramdown:
+  footnote_backlink: "&#8617;&#xfe0e;"
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: highlight
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
+
+collections:
+  tabs:
+    output: true
+    sort_by: order
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      comments: true
+      toc: true
+      # DO NOT change this without updating every internal post link —
+      # Chirpy's templates assume this URL shape.
+      permalink: /posts/:title/
+  - scope:
+      path: _drafts
+    values:
+      comments: false
+  - scope:
+      path: ""
+      type: tabs
+    values:
+      layout: page
+      permalink: /:title/
+
+sass:
+  style: compressed
+
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  profile: false
+  blanklines: false
+  ignore:
+    envs: [development]
 
 exclude:
+  - "*.gem"
+  - "*.gemspec"
   - Gemfile
   - Gemfile.lock
   - SETUP.md
   - README.md
   - vendor
   - node_modules
+  - tools
+  - docs
+
+jekyll-archives:
+  enabled: [categories, tags]
+  layouts:
+    category: category
+    tag: tag
+  permalinks:
+    tag: /tags/:name/
+    category: /categories/:name/
