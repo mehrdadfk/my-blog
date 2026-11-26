@@ -5,9 +5,7 @@ date:   2026-11-25 10:00:00 -0000
 categories: ml
 ---
 
-Most of what people mean when they say "AI model" today is a generative,
-autoregressive LLM: feed it tokens, it predicts the next one, repeat. But
-a parallel thread has been getting a lot of attention lately under the
+A parallel thread to LLM has been getting a lot of attention lately under the
 name **decision models** — models that don't generate text at all. They
 take a fixed set of options and *score* them. This post is my notes on
 what that distinction actually means, prompted by reading Marc Brooker's
