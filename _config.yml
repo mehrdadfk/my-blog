@@ -6,9 +6,15 @@ theme: jekyll-theme-chirpy
 
 lang: en
 
-# Leave empty for now; set once you've registered a domain (see SETUP.md).
-# E.g. 'https://username.github.io', no trailing slash.
-url: ""
+# Absolute origin of the site, no trailing slash — used by the sitemap,
+# canonical tags, and RSS feed to emit full URLs instead of relative
+# paths (the sitemap spec requires absolute <loc> values; Google won't
+# reliably pick up a sitemap that doesn't have them). Set to the custom
+# domain (see CNAME file + SETUP.md §3) rather than the github.io URL,
+# now that one's registered. Leave `baseurl` alone — the GitHub Actions
+# workflow injects the right one at build time regardless of what's here,
+# and a custom domain always serves a project page at the root anyway.
+url: "https://mehrdadfk.com"
 baseurl: ""
 
 timezone:

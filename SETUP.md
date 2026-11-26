@@ -55,36 +55,17 @@ current Ruby — see the comment at the top of the `Gemfile`.)
 I didn't do steps 1–2 automatically — say the word and I'll create the
 repo and push for you once you're happy with the content.
 
-## 3. Get a custom domain and point it here
+## 3. Custom domain: mehrdadfk.com
 
-This is the same end result as brooker.co.za, minus the server to
-maintain. Total cost: just the domain registration (~$10–15/year, no
-separate hosting fee).
+Domain is bought. `_config.yml` (`url: "https://mehrdadfk.com"`) and the
+`CNAME` file (containing `mehrdadfk.com`) are already set up in this repo
+— the only things left are DNS, at your registrar, and one field in the
+GitHub repo settings.
 
-### a) Register the domain
+### a) Point DNS at GitHub Pages
 
-Pick a registrar. For cost + ease of use, in order of preference:
-
-| Registrar | Why |
-|---|---|
-| **Cloudflare Registrar** (recommended) | Sells at *wholesale* price, no markup — typically the cheapest for `.com`. DNS is also free and very fast. Catch: you can only *transfer in* an existing domain to register renewals there in some TLDs, but for most common TLDs (`.com`, `.dev`, `.me`) you can register fresh directly. |
-| **Namecheap** | Slightly higher price than wholesale, but anyone can register directly, good UI, free WHOIS privacy. |
-| Avoid GoDaddy | Works fine technically, but aggressive upsells and higher renewal prices after year 1. |
-
-Steps (Namecheap, as the most universally available option):
-1. Go to namecheap.com, search your desired name (e.g. `mehrdadf.dev`,
-   `mehrdadf.com` — `.dev` and `.me` are nice for personal/tech blogs and
-   are usually cheap, ~$12–15/yr).
-2. Buy it. Enable free WHOIS privacy (usually on by default now).
-3. You do **not** need to buy any hosting/email add-ons they'll try to
-   upsell — you only need the domain itself.
-
-### b) Point DNS at GitHub Pages
-
-In your registrar's DNS management panel for the domain:
-
-**If you want the bare domain** (`mehrdadf.dev`) to work, add these four
-`A` records (GitHub Pages' fixed IPs) at the root (`@`):
+In your registrar's DNS management panel for `mehrdadfk.com`, add these
+four `A` records at the root/apex (`@`) — GitHub Pages' fixed IPs:
 
 ```
 A    @    185.199.108.153
@@ -93,41 +74,52 @@ A    @    185.199.110.153
 A    @    185.199.111.153
 ```
 
-**If you want `www.mehrdadf.dev`** to work too (recommended, and GitHub
-will redirect one to the other depending on your `CNAME` file), add:
+If you also want `www.mehrdadfk.com` to work (GitHub will redirect it to
+the apex automatically once both are set up), add:
 
 ```
-CNAME    www    <your-username>.github.io.
+CNAME    www    mehrdadfk.github.io.
 ```
 
-(Most people set up both: apex via the four `A` records, `www` via
-`CNAME`, then tell GitHub which one is canonical in the next step.)
+DNS propagation can take anywhere from a few minutes to a few hours.
 
-### c) Tell GitHub about the domain
+### b) Tell GitHub about the domain
 
-Because this repo deploys via the GitHub Actions workflow (not the legacy
-"deploy from a branch" pipeline), you need to add the `CNAME` file
-yourself so it survives every rebuild:
-
-1. Create a file named `CNAME` (no extension) at the **root of this
-   repo** (next to `_config.yml`), containing just the domain on one
-   line, e.g.:
-   ```
-   mehrdadf.dev
-   ```
-   Commit and push it — it'll get copied into `_site/CNAME` on every
-   build, which is how GitHub Pages knows the domain.
-2. In the repo: **Settings → Pages → Custom domain**, enter the same
-   domain (`mehrdadf.dev`), save. Wait for the DNS check to go green
-   (can take a few minutes up to a few hours for DNS to propagate).
+1. Push this repo's `CNAME` file (already created, containing
+   `mehrdadfk.com`) if you haven't yet — it's what tells GitHub Pages
+   which domain to serve on every Actions-built deploy.
+2. In the repo: **Settings → Pages → Custom domain**, enter
+   `mehrdadfk.com`, save. Wait for the DNS check to go green (depends on
+   step (a) having propagated).
 3. Once it's green, tick **Enforce HTTPS** — GitHub provisions a free
-   Let's Encrypt certificate automatically.
-4. Update `_config.yml`:
-   ```yaml
-   url: "https://mehrdadf.dev"
-   baseurl: ""
-   ```
-   Commit and push.
+   Let's Encrypt certificate automatically. (Until this is ticked, or
+   right after the domain is first added, you may briefly see a
+   certificate warning — normal during provisioning, not something to
+   fix.)
 
-That's it — no server, no nginx, no TLS renewal to manage, and the only
-recurring cost is the ~$12–15/yr domain renewal.
+### c) One transition quirk worth knowing
+
+Once the custom domain is configured, the site's internal links/assets
+are built assuming it's served at the **root** of a domain (no `/my-blog/`
+prefix) — that's correct for `mehrdadfk.com/`, but it means the old
+`https://mehrdadfk.github.io/my-blog/` URL will start showing a page with
+broken CSS/JS (links will point at the wrong path). That's expected, not
+a bug — just use `mehrdadfk.com` going forward and don't worry about the
+old URL.
+
+### d) After it's live: update Google Search Console
+
+The `github.io` property you may have already set up in Search Console
+is a *separate* property from the custom domain. Once `mehrdadfk.com` is
+serving correctly over HTTPS:
+
+1. Add a **new property** in Search Console, type **Domain**, value
+   `mehrdadfk.com` — this method verifies via a DNS TXT record (added at
+   the same registrar DNS panel as step (a)) and automatically covers
+   `http`/`https`/`www`/apex in one property, unlike the URL-prefix type.
+2. Submit `sitemap.xml` there too.
+3. The old `github.io` URL-prefix property can stay or be removed —
+   doesn't matter much either way once the domain is the canonical one.
+
+Total ongoing cost from here: just the domain's yearly renewal — no
+server, no nginx, no TLS renewal to manage by hand.
